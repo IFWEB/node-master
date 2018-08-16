@@ -1,0 +1,232 @@
+<style type="text/css">._m_point {
+	position: fixed;
+	bottom: 20px;
+	left: 20px;
+	width: 10px;
+	height: 10px;
+	border-radius: 10px;
+	border: 2px solid #167b16;
+	background: #9abd9a;
+	z-index: 9999
+}
+
+._m_panel {
+	display: none;
+	position: absolute;
+	bottom: 0;
+	left: 8px;
+	padding: 10px;
+	width: 200px;
+	font-size: 14px;
+	line-height: 2;
+	background: #fff;
+	border: 1px solid #eee;
+	border-radius: 5px;
+	box-shadow: 1px 1px 5px #eee;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none
+}
+
+._m_point_selected ._m_panel {
+	display: block
+}
+
+._m_panel input {
+	margin-left: 4px
+}
+
+._m_row2 {
+	padding-left: 15px
+}
+
+._m_row3 {
+	padding-left: 30px;
+	margin-bottom: 10px
+}
+
+._m_row3 input {
+	margin-right: 4px
+}
+
+._m_btn {
+	display: inline-block;
+	vertical-align: middle;
+	padding: 0 35px;
+	height: 28px;
+	font-size: 14px;
+	color: #fff;
+	line-height: 28px;
+	text-align: center;
+	background: #04acf7;
+	border-radius: 3px;
+	cursor: pointer
+}
+
+._m_btn:hover {
+	color: #fff;
+}
+
+._m_center {
+	text-align: center
+}
+
+._m_mask_disabled {
+	color: #999
+}
+
+._m_host_box {
+	display: inline-block;
+	margin-right: 20px;
+	min-width: 55px;
+	text-align: right
+}</style>
+
+	<div class="_m_point">
+		<div class="_m_panel" id="_m_panel">
+			<div class="_m_row1">
+				<span>端口：<span id="_m_port"></span></span>
+				<span style="margin-left: 20px;">环境：<span id="_m_env"></span></span>
+			</div>
+
+			<div class="_m_row1"><label for="_m_master_server">服务器数据</label><input type="radio" id="_m_master_server" name="_m_datafrom"/></div>
+			<div class="_m_mask">
+				<div class="_m_row2">
+					<label for="_m_data_record" title="数据会录制在跟目录data文件夹">录制数据到本地</label><input type="checkbox" id="_m_data_record"/>
+				</div>
+				<div class="_m_row2" title="cgi和vm数据来源于哪个测试环境">host选择</div>
+				<div class="_m_row3" id="_m_hosts"></div>
+				<div class="_m_row2">
+					<label for="_m_master_yapi">YApi数据</label><input type="radio"  id="_m_master_yapi" name="_m_host"/>
+				</div>
+			</div>
+			
+			<div class="_m_row1"><label for="_m_master_local">本地数据</label><input type="radio"  id="_m_master_local" name="_m_datafrom"/></div>
+			<div class="_m_row1"><label for="_m_master_mock">本地mockjs</label><input type="radio"  id="_m_master_mock" name="_m_datafrom"/></div>
+			<div class="_m_row1 _m_center"><a href="javascript:location.reload();" class="_m_btn">刷新页面</a></div>
+		</div>
+	</div>
+
+<script type="text/javascript">
+	(function(config) {
+		var hostHTML = '',
+			$panel = $('#_m_panel'),
+			imgObj = new Image(),
+			imgURL = '';
+
+		try {
+			config = JSON.parse(config);
+		} catch(e) {
+			config = {};
+			console.log(e);
+		}
+
+		$panel.find('#_m_port').html(config.port);
+		$panel.find('#_m_env').html(config.env);
+		$panel.find('#_m_data_record').prop('checked', !!config.copyDataToLocal);
+
+		imgURL = 'http://127.0.0.1:' + config.port + '/_master_';
+
+
+		for(var i = 0, len = config.hosts.length; i < len; i++) {
+			var obj = config.hosts[i];
+
+			hostHTML += '<span class="_m_host_box"><label for="_m_host_' + obj['ip'] + '" title="' + obj['desc'] + '">' + obj['label'] + '</label><input type="radio" name="_m_host" id="_m_host_' + obj['ip'] + '"' + (obj['selected'] ? ' checked' : '') + '/></span>';
+		}
+
+		$panel.find('#_m_hosts').html(hostHTML);
+
+		switch(config.mode) {
+			case 'serverdata':
+				$panel.find('#_m_master_server').attr('checked', true);
+				break;
+			case 'yapidata':
+				console.log(53216);
+				$panel.find('#_m_master_local').attr('checked', false);
+				$panel.find('#_m_master_server').attr('checked', true);
+				$panel.find('#_m_master_yapi').attr('checked', true);
+/*				$panel.find('#_m_master_yapi').attr('checked', true);
+				$('._m_mask').removeAttr('disabled');*/
+				break;
+			case 'localdata':
+				$panel.find('#_m_master_local').attr('checked', true);
+				$('._m_mask').addClass('_m_mask_disabled');
+				$('._m_mask').find('input').attr('disabled', true);
+				break;
+			case 'mockjs':
+				$panel.find('#_m_master_mock').attr('checked', true);
+				$('._m_mask').addClass('_m_mask_disabled');
+				$('._m_mask').find('input').attr('disabled', true);
+				break;
+		}
+
+		$panel.on('change', function (e) {
+			var t = e.target;
+
+			switch(t.id) {
+				case '_m_master_server': 
+					if ($panel.find('#_m_master_yapi').attr("checked")) {
+						config.mode = 'yapidata';
+					} else {
+						config.mode = 'serverdata';
+					}
+					
+					$('._m_mask').removeClass('_m_mask_disabled');
+					$('._m_mask').find('input').attr('disabled', null);
+					break;
+				case '_m_master_yapi': 
+					config.mode = 'yapidata';
+					break;
+				case '_m_master_local': 
+					config.mode = 'localdata';
+					$('._m_mask').addClass('_m_mask_disabled');
+					$('._m_mask').find('input').attr('disabled', true);
+					break;
+				case '_m_master_mock': 
+					config.mode = 'mockjs';
+					$('._m_mask').addClass('_m_mask_disabled');
+					$('._m_mask').find('input').attr('disabled', true);
+					break;
+
+				case '_m_data_record':
+					config.copyDataToLocal = $panel.find('#_m_data_record:checked').length !== 0 ? 1 : 0;
+					break;
+
+				default:
+					config.mode = 'serverdata';
+					if(t.id.indexOf('_m_host_') !== -1) {
+						for(var i = 0, len = config.hosts.length; i < len; i++) {
+							var hostObj = config.hosts[i];
+
+							if(t.id === '_m_host_' + hostObj['ip']) {
+								config.hosts[i].selected = 1;
+							} else {
+								config.hosts[i].selected = 0;
+							}
+						}
+					}
+			}
+
+			// ws.send(JSON.stringify(config));
+			imgObj.src = imgURL + '?config=' + JSON.stringify(config);
+		});
+
+		$('._m_point').on('click', function (e) {
+			if(e.target.className.indexOf('_m_point') !== -1) {
+				$(this).toggleClass('_m_point_selected');
+				e.stopPropagation();
+			}
+		});
+
+		$(document).on('click', function (e) {
+			if($(e.target).closest('._m_point').length !== 0) {
+				return;
+			}
+
+			$('._m_point').removeClass('_m_point_selected');
+		});
+
+	})({__master_config});
+</script>
+
