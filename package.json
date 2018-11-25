@@ -1,0 +1,41 @@
+{
+  "name": "node-master",
+  "version": "0.0.1",
+  "description": "Front-end proxy server",
+  "main": "lib/master.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IFWEB/node-master.git"
+  },
+  "keywords": [
+    "node",
+    "master",
+    "nfd",
+    "proxy",
+    "server"
+  ],
+  "author": "IFWEB Team",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IFWEB/node-master/issues"
+  },
+  "homepage": "https://github.com/IFWEB/node-master#readme",
+  "dependencies": {
+    "commander": "^2.9.0",
+    "connect-multiparty": "^2.2.0",
+    "express": "^4.14.0",
+    "fs": "^0.0.2",
+    "connect-history-api-fallback-nfd": "0.0.2",
+    "http-proxy": "^1.17.0",
+    "request-ssl-nfd": "0.0.1",
+    "webpack": "^2.7.0",
+    "webpack-dev-middleware-nfd": "^1.10.2",
+    "webpack-hot-middleware": "^2.24.3"
+  }
+}
