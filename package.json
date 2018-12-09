@@ -1,8 +1,8 @@
 {
   "name": "nfd-master",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "Front-end proxy server",
-  "main": "lib/master.js",
+  "main": "lib/index.js",
   "directories": {
     "lib": "lib"
   },

@@ -1,4 +1,4 @@
-const master = require('../lib/master');
+const master = require('../lib/index');
 const program = require('commander');
 const pkg     = require('../package.json');
 
@@ -9,11 +9,14 @@ program
 program
     .command('master')
     .description('start node master')
-    .option('-f, --frame [frame]', '项目的框架')
     .option('-p, --port [port]', '指定端口号')
     .option('-e, --env [env]', '选择dist模式或者dev(默认)模式')
     .action(function(){
-        master();
+        if (process.argv[3] === 'vue' || process.argv[3] === 'fis3') {
+            master();
+        } else {
+            console.log('请输入项目所使用的框架: nfd master ***');
+        }
     });
 
 program.parse(process.argv);
