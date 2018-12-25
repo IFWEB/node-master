@@ -12,13 +12,17 @@ cd project
 ```
 在项目目录下创建config配置文件夹
 ```
-mkdir config
+mkdir masterConf
 ```
-config文件夹下创建masterConf.js配置文件，内容如下：
+masterConf文件夹下创建index.js配置文件，如果是vue + webpack的形式，则还要设置middlewareConf.js，内容如下：
 ```javascript
-var path = require('path')
+// masterConf/index.js
+const path = require('path')
+// 如果是vue + webpack的形式，需要引入middlewareConf.js 
+const middlewareConf = require('./middlewareConf')
 
-module.exports = {
+// 如果是vue + webpack的形式，需要合并middlewareConf
+module.exports = Object.assign( middlewareConf, {
     // 设置环境变量，可省参数，默认值：dev
     env: 'dev',
 
@@ -52,71 +56,22 @@ module.exports = {
     // 需要拦截转发的请求
     monitoringList: ['/pathA/pathB/*'],
 
-   // 需要代理到其他特殊目标地址的请求
+    // 需要代理到其他特殊目标地址的请求
     proxyTable: {
         'sourceUrl': 'targetUrl'
     },
 
-    dev: {
-        env: 'dev',
-        
-        // vue+webpack时，静态资源的cdn前缀
-        publicPath: '/',
-
-        // 静态资源请求，对象形式，可设置多个请求链接
-        staticUrls: {
-            'sourceUrl': 'targetUrl'
-        },
-      
-        // 打包的目标文件夹
-        distRoot: path.resolve(__dirname, 'targetDir'),
-        
-        // 打包后的静态资源路径
-        distPublicRoot: path.resolve(__dirname, 'targetDir'),
+    // 静态资源请求，对象形式，可设置多个请求链接
+    staticUrls: {
+        'sourceUrl': 'targetUrl'
     },
-    test: {
-        env: 'test',
-                
-        // vue+webpack时，静态资源的cdn前缀
-        publicPath: '',
-
-        // 静态资源请求，对象形式，可设置多个请求链接
-        staticUrls: {
-            'sourceUrl': 'targetUrl'
-        },
-      
-        // 打包的目标文件夹
-        distRoot: path.resolve(__dirname, 'targetDir'),
-        
-        // 打包后的静态资源路径
-        distPublicRoot: path.resolve(__dirname, 'targetDir'),
-    },
-    dist: {
-        env: 'dist',
-               
-        // vue+webpack时，静态资源的cdn前缀
-        publicPath: '',
-
-        // 静态资源请求，数组形式，可设置多个请求链接
-        staticUrls: {
-           'sourceUrl': 'targetUrl'
-        },
-     
-        // 打包的目标文件夹
-        distRoot: path.resolve(__dirname, 'targetDir'),
-       
-        // 打包后的静态资源路径
-        distPublicRoot: path.resolve(__dirname, 'targetDir'),
-        
-        // webpack的配置，后期分离出去
-        productionSourceMap: true,
-        productionGzip: false,
-        productionGzipExtensions: ['js', 'css'],
-    }
-}
+    
+    // 打包的目标文件夹
+    distRoot: path.resolve(__dirname, 'targetDir'),
+});
 
 ```
-在项目下启动node-master
+在项目下启动node-master，port为可省端口参数，默认使用masterConf中设置的port。
 ```
 nfd master frame -p prot
 ```
