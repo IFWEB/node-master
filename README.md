@@ -15,6 +15,11 @@ cd project
 mkdir masterConf
 ```
 masterConf文件夹下创建index.js配置文件，如果是vue + webpack的形式，则还要设置middlewareConf.js，内容如下：
+```
+|-- masterConf
+|------ index.js
+|------ middlewareConf.js
+```
 ```javascript
 // masterConf/index.js
 const path = require('path')
@@ -70,6 +75,36 @@ module.exports = Object.assign( middlewareConf, {
     distRoot: path.resolve(__dirname, 'targetDir'),
 });
 
+```
+```javascript
+// masterConf/middlewareConf.js
+var webpackConf = require('../build/webpack.dev.conf')
+
+module.exports = {
+  webpackMiddleWareOption: {
+    publicPath: webpackConf.output && webpackConf.output.publicPath,
+    noInfo: false,
+    quiet: false,
+    lazy: false,
+    watchOptions: {
+      aggregateTimeout: 300,
+      poll: true
+    },
+    index: 'index.html',
+    headers: {
+      'X-Custom-Header': 'yes'
+    },
+    stats: {
+      colors: true,
+      chunks: true,
+      assets: true
+    },
+    reporter: null,
+    serverSideRender: true
+  },
+
+  hotMiddlewareOption: {}
+}
 ```
 在项目下启动node-master，port为可省端口参数，默认使用masterConf中设置的port。
 ```
