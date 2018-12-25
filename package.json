@@ -1,6 +1,6 @@
 {
   "name": "nfd-master",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Front-end proxy server",
   "main": "lib/index.js",
   "directories": {
@@ -31,13 +31,14 @@
   "homepage": "https://github.com/IFWEB/node-master#readme",
   "dependencies": {
     "commander": "^2.9.0",
+    "connect-history-api-fallback-nfd": "0.0.2",
     "connect-multiparty": "^2.2.0",
     "express": "^4.14.0",
     "fs": "^0.0.2",
-    "connect-history-api-fallback-nfd": "0.0.2",
     "http-proxy": "^1.17.0",
     "open-browser-webpack-plugin": "0.0.5",
     "request-ssl-nfd": "0.0.1",
+    "url-parse": "^1.4.4",
     "webpack": "^3.6.1",
     "webpack-dev-middleware-nfd": "^1.10.2",
     "webpack-hot-middleware": "^2.24.3"
