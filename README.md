@@ -108,7 +108,7 @@ module.exports = {
 ```
 在项目下启动node-master，port为可省端口参数，默认使用masterConf中设置的port。
 ```
-nfd master frame -p prot
+nfd master frame -p port
 ```
 frame是必须参数，是项目使用到的打包工具，目前只有两种：
 * webpack
