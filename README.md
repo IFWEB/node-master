@@ -111,5 +111,5 @@ module.exports = {
 nfd master frame -p port
 ```
 frame是必须参数，是项目使用到的打包工具，目前只有两种：
-* webpack
+* vue
 * fis3
