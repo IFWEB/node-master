@@ -28,13 +28,16 @@ const middlewareConf = require('./middlewareConf')
 
 // 如果是vue + webpack的形式，需要合并middlewareConf
 module.exports = Object.assign( middlewareConf, {
+    // 当前使用的框架：webpack、fis3，默认是webpack
+    frame: 'webpack',
+    
     // 设置环境变量，可省参数，默认值：dev
     env: 'dev',
 
     // 项目启动的端口
     port: 8002,
 
-    // 使用vue框架时，采用的路由模式：history/hash
+    webpack
     routerMode: 'hash',
 
     // 是否按照请求路径，copy响应数据到本地
@@ -108,8 +111,5 @@ module.exports = {
 ```
 在项目下启动node-master，port为可省端口参数，默认使用masterConf中设置的port。
 ```
-nfd master frame -p port
+nfd master -p port -e dev
 ```
-frame是必须参数，是项目使用到的打包工具，目前只有两种：
-* vue
-* fis3
