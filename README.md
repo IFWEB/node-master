@@ -117,10 +117,12 @@ module.exports = {
 ```
 **启动命令：nfd master**
 
-port为可省端口参数，默认使用masterConf中设置的port，环境变量env为可省参数，默认使用masterConf中配置的env。
+端口port为可省参数，默认使用masterConf中设置的port。
+
+环境变量env为可省参数，默认使用masterConf中配置的env。
 
 fis3项目无需执行fis3 imweb dev -wl命令单独打包，nfd-master已经集成了打包该打包命令。
 
 ```
-nfd master -p port -e dev
+nfd master -p 8001 -e dev
 ```
