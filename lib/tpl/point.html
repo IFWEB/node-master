@@ -101,7 +101,7 @@
 					<label for="_m_master_yapi">YApi数据</label><input type="radio"  id="_m_master_yapi" name="_m_host"/>
 				</div>
 			</div>
-			
+
 			<div class="_m_row1"><label for="_m_master_local">本地数据</label><input type="radio"  id="_m_master_local" name="_m_datafrom"/></div>
 			<div class="_m_row1"><label for="_m_master_mock">本地mockjs</label><input type="radio"  id="_m_master_mock" name="_m_datafrom"/></div>
 			<div class="_m_row1 _m_center"><a href="javascript:location.reload();" class="_m_btn">刷新页面</a></div>
@@ -246,7 +246,7 @@
                 return;
             }*/
             var parentNode = e.target.parentNode;
-            if(parentNode.className.indexOf('_m_point') === -1) {
+            if(parentNode.className === '' || (parentNode.className && parentNode.className.indexOf('_m_point') === -1)) {
                 return;
             }
 
