@@ -82,8 +82,7 @@
 	min-width: 55px;
 	text-align: right
 }</style>
-
-	<div class="_m_point">
+<div class="_m_point">
 		<div class="_m_panel" id="_m_panel">
 			<div class="_m_row1">
 				<span>端口：<span id="_m_port"></span></span>
@@ -204,8 +203,7 @@
                     break;
 
                 case '_m_data_record':
-                    // config.copyDataToLocal = $panel.find('#_m_data_record:checked').length !== 0 ? 1 : 0;
-                    config.copyDataToLocal = $mrecord.getAttribute('checked') ? 1 : 0;
+                    config.copyDataToLocal = $mrecord.checked ? 1 : 0;
                     break;
 
                 default:
