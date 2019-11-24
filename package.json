@@ -1,6 +1,6 @@
 {
   "name": "nfd-master",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "Front-end proxy server",
   "main": "lib/index.js",
   "directories": {
@@ -41,8 +41,8 @@
     "shelljs": "^0.8.3",
     "strip-json-comments": "^3.0.1",
     "url-parse": "^1.4.4",
-    "webpack": "^3.6.1",
-    "webpack-dev-middleware-nfd": "^1.10.2",
+    "webpack": "^4.41.2",
+    "nfd-webpack-dev-middleware": "^1.0.0",
     "webpack-hot-middleware": "^2.24.3"
   }
 }
